@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<?import java.net.URL?>
+<VBox spacing="10" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.bomgas.monitor.Controller">
+    <stylesheets>
+        <URL value="@styles.css"/>
+    </stylesheets>
+    <Label text="📡 Monitor de Chamadas" styleClass="title"/>
+    <ListView fx:id="logListView" prefHeight="200" styleClass="log-list"/>
+    <HBox spacing="5" styleClass="input-box">
+        <TextField fx:id="ipField" promptText="Digite o IP do servidor" styleClass="input-field"/>
+        <Button text="Salvar" onAction="#saveIP" styleClass="button"/>
+    </HBox>
+    <HBox spacing="5" styleClass="button-box">
+        <Button fx:id="startStopButton" text="Start Server" onAction="#handleStartStop" styleClass="button"/>
+        <Button fx:id="restartButton" text="Restart Server" onAction="#handleRestart" styleClass="button"/>
+    </HBox>
+</VBox>
