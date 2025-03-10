@@ -88,13 +88,38 @@ public class Server extends NanoHTTPD {
         String uri = session.getUri();
         if (uri.startsWith("/number/")) {
             String phoneNumber = uri.substring("/number/".length());
-            LogManager.addLog("📞 Chamada recebida de: " + phoneNumber);
-            if (phoneNumber.matches("\\d{5,15}")) {
-                return newFixedLengthResponse("OK: " + phoneNumber);
+
+            // Remove o zero inicial, se existir
+            if (phoneNumber.startsWith("0")) {
+                phoneNumber = phoneNumber.substring(1);
             }
+
+            // Se tiver mais de 11 caracteres, mantém apenas os últimos 11
+            if (phoneNumber.length() > 11) {
+                phoneNumber = phoneNumber.substring(phoneNumber.length() - 11);
+            }
+
+            LogManager.addLog("📞 Chamada recebida de: " + phoneNumber);
+
+            // URL para abrir no Chrome
+            String url = "https://portal.gasdelivery.com.br/secure/client/?primary_phone=" + phoneNumber;
+
+            // Comando para abrir uma nova aba no Chrome
+            try {
+                String[] command;
+                if (System.getProperty("os.name").toLowerCase().contains("win")) {
+                    command = new String[]{"cmd", "/c", "start chrome --new-tab " + url};
+                } else {
+                    command = new String[]{"sh", "-c", "google-chrome --new-tab " + url}; // Para Linux/macOS
+                }
+                Runtime.getRuntime().exec(command);
+            } catch (IOException e) {
+                LogManager.addLog("⚠️ Erro ao abrir o navegador: " + e.getMessage());
+            }
+
+            return newFixedLengthResponse("OK: " + phoneNumber);
         }
         return newFixedLengthResponse(Response.Status.BAD_REQUEST, "text/plain", "Número inválido.");
     }
-
 
 }

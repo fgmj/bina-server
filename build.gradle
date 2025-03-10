@@ -4,6 +4,10 @@ plugins {
     id 'org.javamodularity.moduleplugin' version '1.8.12'  // Última versão compatível com Java 17
     id 'org.openjfx.javafxplugin' version '0.0.13'
     id 'org.beryx.jlink' version '2.25.0'
+
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+
+
 }
 
 group 'br.com.bomgas'
@@ -24,6 +28,7 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+mainClassName = 'br.com.bomgas.monitor.MainApp'
 
 application {
     mainClass = 'br.com.bomgas.monitor.MainApp'
@@ -35,6 +40,12 @@ javafx {
     modules = ['javafx.controls', 'javafx.fxml', 'javafx.swing']
 }
 
+jar {
+    manifest {
+        attributes 'Main-Class': mainClassName
+    }
+}
+
 dependencies {
     implementation 'org.controlsfx:controlsfx:11.1.1'  // Última versão compatível com Java 17
     implementation 'org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0'
@@ -44,6 +55,9 @@ dependencies {
     implementation 'org.openjfx:javafx-fxml:19'
     implementation 'org.openjfx:javafx-swing:19'
     implementation 'org.jmdns:jmdns:3.5.4'
+
+    implementation 'org.openjfx:javafx-controls:17'
+    implementation 'org.openjfx:javafx-fxml:17'
 
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"

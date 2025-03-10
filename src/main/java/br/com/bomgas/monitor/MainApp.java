@@ -18,6 +18,7 @@ public class MainApp extends Application {
         launch();
     }
 
+
     @Override
     public void start(Stage stage) throws IOException {
         // Pass in the app's main stage, and path to the icon image
