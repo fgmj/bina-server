@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class ConfigManager {
     private static final String FILE_PATH = "settings.properties";
-    private static Properties properties = new Properties();
+    private static final Properties properties = new Properties();
 
     static {
         try (FileInputStream in = new FileInputStream(FILE_PATH)) {
